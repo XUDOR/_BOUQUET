@@ -309,7 +309,7 @@ class LayoutGenerator {
       this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
       this.canvas.addEventListener('mousemove', this.handleMouseMove.bind(this));
       this.canvas.addEventListener('mouseup', this.handleMouseUp.bind(this));
-      this.canvas.addEventListener('wheel', this.handleWheel.bind(this));
+      
       
       // Window resize event
       window.addEventListener('resize', () => {
@@ -356,16 +356,7 @@ class LayoutGenerator {
       }
   }
   
-  handleWheel(e) {
-      e.preventDefault();
-      
-      // Scale based on wheel direction
-      const scaleFactor = e.deltaY < 0 ? 1.1 : 0.9;
-      this.scale = Math.max(0.5, Math.min(this.scale * scaleFactor, 3));
-      
-      this.applyTransform();
-  }
-  
+
   handleMouseMove(e) {
       if (this.isPanning) {
           const dx = e.clientX - this.lastPanPosition.x;

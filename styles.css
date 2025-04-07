@@ -97,7 +97,7 @@ body {
 
 .section {
   flex: 1;
-  min-width: 300px;
+  max-width: 500px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   background-color: #184551;
@@ -142,7 +142,11 @@ input, select, button {
   font-size: 1rem;
 }
 
+input {
+  width: 100px;
+}
 button {
+  width: 100px;
   background-color: var(--secondary-color);
   color: white;
   cursor: pointer;
@@ -156,22 +160,18 @@ button:hover {
 }
 
 .zoom-buttons {
+  width: 100px;
+  height: 60px;
   display: flex;
-  gap: 0.5rem;
+  gap: 0.7rem;
 }
 
 .zoom-btn-inline {
   flex: 1;
-  padding: 0.4rem;
-  font-size: 0.75rem;
+  padding: 0.1rem;
+  font-size: 1em;
 }
 
-.boolean-toggle {
-  height: 2rem;
-  background-color: var(--gray-200);
-  border-radius: 4px;
-  border: 1px solid var(--gray-400);
-}
 
 /* Section 3 - Toolbar */
 .toolbar {
@@ -424,7 +424,7 @@ button:hover {
   border: 1px solid var(--gray-300);
   border-radius: 4px;
   padding: 0.5rem;
-  font-size: 0.75rem;
+  font-size: 1.2em;
   color: var(--gray-800);
   overflow: hidden;
   width: 100%;
