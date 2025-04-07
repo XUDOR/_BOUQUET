@@ -3,103 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Web App Layout Generator</title>
+    <title>Bouquet - Wireframe Generator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="app-container">
-        <header>
-            <div class="controls">
-                <div class="control-group">
-                    <label for="ratio-input">Split Ratio (%)</label>
-                    <input type="number" id="ratio-input" min="10" max="90" value="50" step="5">
-                </div>
-                <div class="control-group">
-                    <label for="columns-input">Tool Columns</label>
-                    <input type="number" id="columns-input" min="1" max="6" value="2" step="1">
-                </div>
-                <div class="control-group">
-                    <button id="grid-btn">Grid Templates</button>
-                </div>
-                <div class="control-group">
-                    <button id="reset-btn">Reset</button>
-                </div>
-                <div class="control-group">
-                    <button id="export-btn">Export</button>
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">Bouquet</h1>
+                <div class="device-selector">
+                    <button class="device-btn" id="desktop-btn">Desktop</button>
+                    <button class="device-btn" id="tablet-btn">Tablet</button>
+                    <button class="device-btn" id="mobile-btn">Mobile</button>
                 </div>
             </div>
         </header>
         
-        <div class="toolbar">
-            <div class="tool-buttons">
-                <button class="tool-btn active" data-tool="select">Select</button>
-                <button class="tool-btn" data-tool="text">Text</button>
-                <button class="tool-btn" data-tool="button">Button</button>
-                <button class="tool-btn" data-tool="input">Input</button>
-                <button class="tool-btn" data-tool="image">Image</button>
-                <button class="tool-btn" data-tool="card">Card</button>
-                <button class="tool-btn" data-tool="nav">Nav</button>
-            </div>
-            <div class="view-controls">
-                <button class="tool-btn" id="preview-btn">Preview</button>
+        <div class="main-wrapper">
+            
+            
+            <section class="section section-2">
+                <div class="section-title">Controls</div>
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label for="ratio-input">Split</label>
+                        <input type="number" id="ratio-input" min="10" max="90" value="50" step="5">
+                    </div>
+                    <div class="control-group">
+                        <label for="columns-input">Tool Column</label>
+                        <input type="number" id="columns-input" min="1" max="6" value="2" step="1">
+                    </div>
+                    <div class="control-group">
+                        <label>Grid</label>
+                        <button id="grid-btn">Grid Templates</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Reset</label>
+                        <button id="reset-btn">Reset</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Export</label>
+                        <button id="export-btn">Export</button>
+                    </div>
+                    <div class="control-group zoom-controls-inline">
+                        <label>Zoom</label>
+                        <div class="zoom-buttons">
+                            <button class="zoom-btn-inline" id="zoom-in">zoom in</button>
+                            <button class="zoom-btn-inline" id="zoom-out">zoom out</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <section class="section section-3">
+                <div class="section-title">Toolbar</div>
+                <div class="toolbar">
+                    <div class="tool-buttons">
+                        <button class="tool-btn active" data-tool="select">SELECT</button>
+                        <button class="tool-btn" data-tool="text">Text</button>
+                        <button class="tool-btn" data-tool="button">Button</button>
+                        <button class="tool-btn" data-tool="input">Input</button>
+                        <button class="tool-btn" data-tool="card">Card</button>
+                        <button class="tool-btn" data-tool="image">Image</button>
+                        <button class="tool-btn" data-tool="nav">Nav</button>
+                        <button class="tool-btn" id="preview-btn">Preview</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div class="canvas-section">
+            <div class="design-title">Design section</div>
+            <div class="canvas-container">
+                <div class="canvas" id="layout-canvas"></div>
             </div>
         </div>
         
-        <div class="main-content">
-            <div class="canvas-container">
-                <div class="canvas" id="layout-canvas"></div>
-                <div class="zoom-controls">
-                    <button class="zoom-btn" id="zoom-in">+</button>
-                    <button class="zoom-btn" id="zoom-out">-</button>
+        <footer class="footer">
+            <div class="footer-content">RDXENV</div>
+        </footer>
+        
+        <!-- Panels -->
+        <div class="tool-panel" id="grid-panel">
+            <div class="panel-header">
+                <div class="panel-title">Grid Templates</div>
+                <button class="panel-close" id="grid-panel-close">×</button>
+            </div>
+            <div class="grid-controls">
+                <div class="control-group">
+                    <label for="grid-rows">Rows</label>
+                    <input type="number" id="grid-rows" min="1" max="8" value="2" step="1">
+                </div>
+                <div class="control-group">
+                    <label for="grid-columns">Columns</label>
+                    <input type="number" id="grid-columns" min="1" max="8" value="2" step="1">
+                </div>
+                <div class="control-group">
+                    <button id="apply-grid">Apply Grid</button>
                 </div>
             </div>
-            
-            <div class="tool-panel" id="grid-panel">
-                <div class="panel-header">
-                    <div class="panel-title">Grid Templates</div>
-                    <button class="panel-close" id="grid-panel-close">×</button>
-                </div>
-                <div class="grid-controls">
-                    <div class="control-group">
-                        <label for="grid-rows">Rows</label>
-                        <input type="number" id="grid-rows" min="1" max="8" value="2" step="1">
-                    </div>
-                    <div class="control-group">
-                        <label for="grid-columns">Columns</label>
-                        <input type="number" id="grid-columns" min="1" max="8" value="2" step="1">
-                    </div>
-                    <div class="control-group">
-                        <button id="apply-grid">Apply Grid</button>
-                    </div>
-                </div>
-                <div class="grid-templates">
-                    <div class="grid-template" data-rows="1" data-cols="2">1×2</div>
-                    <div class="grid-template" data-rows="2" data-cols="1">2×1</div>
-                    <div class="grid-template" data-rows="2" data-cols="2">2×2</div>
-                    <div class="grid-template" data-rows="3" data-cols="2">3×2</div>
-                    <div class="grid-template" data-rows="2" data-cols="3">2×3</div>
-                    <div class="grid-template" data-rows="1" data-cols="3">1×3</div>
-                    <div class="grid-template" data-rows="3" data-cols="1">3×1</div>
-                    <div class="grid-template" data-rows="4" data-cols="1">4×1</div>
-                    <div class="grid-template" data-rows="1" data-cols="4">1×4</div>
-                </div>
+            <div class="grid-templates">
+                <div class="grid-template" data-rows="1" data-cols="2">1×2</div>
+                <div class="grid-template" data-rows="2" data-cols="1">2×1</div>
+                <div class="grid-template" data-rows="2" data-cols="2">2×2</div>
+                <div class="grid-template" data-rows="3" data-cols="2">3×2</div>
+                <div class="grid-template" data-rows="2" data-cols="3">2×3</div>
+                <div class="grid-template" data-rows="1" data-cols="3">1×3</div>
+                <div class="grid-template" data-rows="3" data-cols="1">3×1</div>
+                <div class="grid-template" data-rows="4" data-cols="1">4×1</div>
+                <div class="grid-template" data-rows="1" data-cols="4">1×4</div>
             </div>
-            
-            <div class="tool-panel" id="export-panel">
-                <div class="panel-header">
-                    <div class="panel-title">Export Layout</div>
-                    <button class="panel-close" id="export-panel-close">×</button>
-                </div>
-                <div class="export-controls">
-                    <select id="export-format">
-                        <option value="html">HTML & CSS</option>
-                        <option value="json">JSON</option>
-                        <option value="react">React Components</option>
-                    </select>
-                    <button id="copy-export" class="tool-btn">Copy</button>
-                </div>
-                <textarea class="export-code" id="export-code" readonly></textarea>
+        </div>
+        
+        <div class="tool-panel" id="export-panel">
+            <div class="panel-header">
+                <div class="panel-title">Export Layout</div>
+                <button class="panel-close" id="export-panel-close">×</button>
             </div>
+            <div class="export-controls">
+                <select id="export-format">
+                    <option value="html">HTML & CSS</option>
+                    <option value="json">JSON</option>
+                    <option value="react">React Components</option>
+                </select>
+                <button id="copy-export" class="tool-btn">Copy</button>
+            </div>
+            <textarea class="export-code" id="export-code" readonly></textarea>
         </div>
     </div>
 

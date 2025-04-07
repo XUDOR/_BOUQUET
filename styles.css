@@ -1,11 +1,14 @@
 :root {
   --primary-color: #181412;
-  --secondary-color: #8338ec;
-  --accent-color: #ff006e;
+  --secondary-color: #585D42;
+  --accent-color: #859E98;
+  --select-color: #497a09;
+  --border-color: #DBDFBD;
   --light-color: #f8f9fa;
   --dark-color: #212529;
   --success-color: #38b000;
   --warning-color: #ffbe0b;
+  --background-color: #1D280F;
   --gray-100: #f8f9fa;
   --gray-200: #e9ecef;
   --gray-300: #dee2e6;
@@ -21,12 +24,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 1em;
 }
 
 body {
-  background-color: var(--gray-100);
-  color: var(--gray-800);
+  background-color: var(--background-color);
+  color: #CCDADB;
   overflow-x: hidden;
 }
 
@@ -37,42 +41,105 @@ body {
   max-width: 100%;
 }
 
-header {
+/* Header Styles */
+.header {
   background-color: var(--primary-color);
   color: white;
   padding: 0.5rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
 }
 
-.controls {
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.app-title {
+  
+  font-weight: 100;
+  font-size: 3rem;
+  color: white;
+  margin-left: .5rem;
+}
+
+.device-selector {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.device-btn {
+  background-color: var(--dark-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.device-btn:hover {
+  background-color: var(--accent-color);
+}
+
+/* Main Layout */
+.main-wrapper {
   display: flex;
   flex-wrap: wrap;
+  padding: 0.5rem;
   gap: 0.5rem;
-  align-items: center;
-  padding-bottom: 0.5rem;
+  background-color: var(--background-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.section {
+  flex: 1;
+  min-width: 300px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: #184551;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 1.3em;
+  font-weight: 200;
+  padding: 0.3rem 0.5rem;
+  background-color: rgba(0, 0, 0, 0.05);
+
+}
+
+/* Section 2 - Controls */
+.controls-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  padding: 0.75rem;
 }
 
 .control-group {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 120px;
+  
+  gap: 0.25rem;
 }
 
 .control-group label {
-  font-size: 0.75rem;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
+  font-size: 1.3em;
+  font-weight: 300;
 }
 
 input, select, button {
   padding: 0.5rem;
   border: 1px solid var(--gray-300);
   border-radius: 4px;
-  font-size: 0.875rem;
+  font-size: 1rem;
 }
 
 button {
@@ -81,22 +148,86 @@ button {
   cursor: pointer;
   border: none;
   transition: background-color 0.2s;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 button:hover {
   background-color: var(--accent-color);
 }
 
-.main-content {
+.zoom-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.zoom-btn-inline {
   flex: 1;
+  padding: 0.4rem;
+  font-size: 0.75rem;
+}
+
+.boolean-toggle {
+  height: 2rem;
+  background-color: var(--gray-200);
+  border-radius: 4px;
+  border: 1px solid var(--gray-400);
+}
+
+/* Section 3 - Toolbar */
+.toolbar {
+  display: flex;
+  justify-content: left;
+  padding: 0.5rem;
+  margin: 0.5rem;
+  width: auto;
+}
+
+.tool-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.7rem;
+  width: 100px;
+}
+
+.tool-btn {
+  background-color: var(--gray-600);
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.8rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tool-btn.active {
+  background-color: var(--select-color);
+}
+
+#preview-btn {
+  grid-column: span 2;
+}
+
+/* Canvas Section */
+.canvas-section {
+  flex: 1;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
 }
 
+.design-title {
+  padding: 0.5rem;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: light; 
+  font-size: 1.4em;
+  color: var(--light-color);
+}
+
 .canvas-container {
   flex: 1;
-  padding: 1rem;
+  padding: 0;
   position: relative;
   overflow: auto;
 }
@@ -104,14 +235,14 @@ button:hover {
 .canvas {
   width: 100%;
   height: 100%;
-  min-height: 70vh;
+  min-height: 60vh;
   background-color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border-radius: 8px;
   position: relative;
   overflow: hidden;
 }
 
+/* Node Styles */
 .node {
   position: absolute;
   background-color: var(--gray-200);
@@ -121,7 +252,7 @@ button:hover {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  font-size: 0.75rem;
+  font-size: 1em;
   color: var(--gray-700);
 }
 
@@ -150,10 +281,10 @@ button:hover {
 }
 
 .node-control-btn {
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
-  padding: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  padding: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,13 +303,27 @@ button:hover {
 
 .node-label {
   pointer-events: none;
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   font-weight: 500;
   padding: 2px 4px;
   background-color: rgba(255,255,255,0.7);
   border-radius: 2px;
 }
 
+/* Footer */
+.footer {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  
+  text-align: right;
+  font-size: 0.8rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: auto;
+  height: 2rem;
+}
+
+/* Panels */
 .tool-panel {
   background-color: var(--gray-800);
   color: white;
@@ -186,6 +331,11 @@ button:hover {
   display: none;
   height: 30vh;
   overflow-y: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
 }
 
 .tool-panel.active {
@@ -245,53 +395,14 @@ button:hover {
   background-color: var(--primary-color);
 }
 
-.resizer {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background-color: var(--primary-color);
-  border-radius: 50%;
-  z-index: 20;
-  cursor: nwse-resize;
-}
-
-.resizer.tl {
-  top: -4px;
-  left: -4px;
-}
-
-.resizer.tr {
-  top: -4px;
-  right: -4px;
-}
-
-.resizer.bl {
-  bottom: -4px;
-  left: -4px;
-}
-
-.resizer.br {
-  bottom: -4px;
-  right: -4px;
-}
-
-.color-options {
+.export-controls {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.color-option {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid var(--gray-300);
-}
-
-.export-panel {
-  margin-top: 1rem;
+.export-controls select {
+  flex: 1;
 }
 
 .export-code {
@@ -303,49 +414,7 @@ button:hover {
   padding: 0.5rem;
   border: none;
   border-radius: 4px;
-  margin-top: 0.5rem;
   resize: vertical;
-}
-
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--gray-700);
-  padding: 0.5rem;
-}
-
-.tool-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.tool-btn {
-  background-color: var(--gray-600);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-}
-
-.tool-btn.active {
-  background-color: var(--primary-color);
-}
-
-@media (max-width: 768px) {
-  .controls {
-      flex-direction: column;
-      align-items: stretch;
-  }
-  
-  .control-group {
-      width: 100%;
-  }
-  
-  .tool-panel {
-      height: 50vh;
-  }
 }
 
 /* UI Component Templates */
@@ -358,6 +427,8 @@ button:hover {
   font-size: 0.75rem;
   color: var(--gray-800);
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .ui-component.text {
@@ -411,25 +482,44 @@ button:hover {
   gap: 0.25rem;
 }
 
-.zoom-controls {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.25rem;
-  z-index: 50;
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .main-wrapper {
+    flex-direction: column;
+  }
+  
+  .section {
+    width: 100%;
+  }
+  
+  .controls-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .tool-buttons {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.zoom-btn {
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  border: 1px solid var(--gray-300);
-  border-radius: 50%;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .device-selector {
+    margin-top: 0.5rem;
+  }
+  
+  .controls-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tool-buttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .tool-panel {
+    height: 50vh;
+  }
 }
