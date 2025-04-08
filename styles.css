@@ -70,6 +70,9 @@ body {
 .device-selector {
   display: flex;
   gap: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.3rem;
+  border-radius: 4px;
 }
 
 .device-btn {
@@ -83,6 +86,11 @@ body {
 
 .device-btn:hover {
   background-color: var(--accent-color);
+}
+
+.device-btn.active {
+  background-color: var(--select-color); /* Uses the same green highlight color as active tools */
+  border: 1px solid var(--light-color);
 }
 
 /* Main Layout */
