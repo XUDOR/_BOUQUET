@@ -554,171 +554,203 @@ class LayoutGenerator {
       return '';
   }
   
-  generateHTMLCode() {
-      let html = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Generated Layout</title>\n    <style>\n';
-      
-      // Basic CSS
-      html += '* { box-sizing: border-box; margin: 0; padding: 0; }\n';
-      html += 'body { font-family: sans-serif; }\n';
-      html += '.container { width: 100%; height: 100vh; position: relative; }\n';
-      
-      // Generate CSS for each node
-      const generateNodeCSS = (node, prefix = '') => {
-          const selector = `#${node.id}`;
-          html += `${selector} { position: absolute; left: ${node.x}px; top: ${node.y}px; width: ${node.width}px; height: ${node.height}px;`;
-          
-          if (node.backgroundColor) {
-              html += ` background-color: ${node.backgroundColor};`;
-          }
-          
-          html += ' }\n';
-          
-          // Component-specific CSS
-          if (node.contentType) {
-              if (node.contentType === 'button') {
-                  html += `${selector} { display: flex; align-items: center; justify-content: center; background-color: #3a86ff; color: white; border-radius: 4px; }\n`;
-              } else if (node.contentType === 'input') {
-                  html += `${selector} { border: 1px solid #dee2e6; border-radius: 4px; padding: 8px; }\n`;
-              } else if (node.contentType === 'nav') {
-                  html += `${selector} { background-color: #212529; color: white; display: flex; align-items: center; padding: 8px; }\n`;
-              } else if (node.contentType === 'card') {
-                  html += `${selector} { background-color: white; border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 16px; }\n`;
-              }
-          }
-          
-          // Generate CSS for children
-          for (const child of node.children) {
-              generateNodeCSS(child, prefix + '  ');
-          }
-      };
-      
-      generateNodeCSS(this.rootNode);
-      
-      html += '    </style>\n</head>\n<body>\n    <div class="container">\n';
-      
-      // Generate HTML for each node
-      const generateNodeHTML = (node, indent = '        ') => {
-          html += `${indent}<div id="${node.id}"`;
-          
-          if (node.contentType) {
-              html += ` class="${node.contentType}"`;
-          }
-          
-          html += '>\n';
-          
-          // Add content
-          if (node.content && node.children.length === 0) {
-              html += `${indent}    ${node.content}\n`;
-          }
-          
-          // Generate HTML for children
-          for (const child of node.children) {
-              generateNodeHTML(child, indent + '    ');
-          }
-          
-          html += `${indent}</div>\n`;
-      };
-      
-      generateNodeHTML(this.rootNode);
-      
-      html += '    </div>\n</body>\n</html>';
-      
-      return html;
-  }
-  
-  generateReactCode() {
-      let code = "import React from 'react';\n\n";
-      code += "const GeneratedLayout = () => {\n";
-      code += "  return (\n";
-      code += "    <div className=\"container\" style={{ position: 'relative', width: '100%', height: '100vh' }}>\n";
-      
-      // Generate React components for each node
-      const generateNodeComponent = (node, indent = '      ') => {
-          let styles = {
-              position: 'absolute',
-              left: `${node.x}px`,
-              top: `${node.y}px`,
-              width: `${node.width}px`,
-              height: `${node.height}px`
-          };
-          
-          if (node.backgroundColor) {
-              styles.backgroundColor = node.backgroundColor;
-          }
-          
-          // Component-specific styles
-          if (node.contentType === 'button') {
-              styles = {
-                  ...styles,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#3a86ff',
-                  color: 'white',
-                  borderRadius: '4px'
-              };
-          } else if (node.contentType === 'input') {
-              styles = {
-                  ...styles,
-                  border: '1px solid #dee2e6',
-                  borderRadius: '4px',
-                  padding: '8px'
-              };
-          } else if (node.contentType === 'nav') {
-              styles = {
-                  ...styles,
-                  backgroundColor: '#212529',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '8px'
-              };
-          } else if (node.contentType === 'card') {
-              styles = {
-                  ...styles,
-                  backgroundColor: 'white',
-                  border: '1px solid #dee2e6',
-                  borderRadius: '4px',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                  padding: '16px'
-              };
-          }
-          
-          // Generate the style object string
-          const styleStr = Object.entries(styles)
-              .map(([key, value]) => `${key}: '${value}'`)
-              .join(', ');
-          
-          code += `${indent}<div style={{ ${styleStr} }}`;
-          
-          if (node.contentType) {
-              code += ` className="${node.contentType}"`;
-          }
-          
-          code += '>\n';
-          
-          // Add content
-          if (node.content && node.children.length === 0) {
-              code += `${indent}  ${node.content}\n`;
-          }
-          
-          // Generate components for children
-          for (const child of node.children) {
-              generateNodeComponent(child, indent + '  ');
-          }
-          
-          code += `${indent}</div>\n`;
-      };
-      
-      generateNodeComponent(this.rootNode);
-      
-      code += "    </div>\n";
-      code += "  );\n";
-      code += "};\n\n";
-      code += "export default GeneratedLayout;";
-      
-      return code;
-  }
+  // The key improvement is in the generateHTMLCode method
+
+// Replace the generateHTMLCode method in the LayoutGenerator class with this improved version:
+
+generateHTMLCode() {
+    let html = '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Generated Layout</title>\n    <style>\n';
+    
+    // Basic CSS
+    html += '* { box-sizing: border-box; margin: 0; padding: 0; }\n';
+    html += 'body { font-family: sans-serif; }\n';
+    html += '.container { width: 100%; height: 100vh; position: relative; }\n';
+    
+    // Generate CSS for each node
+    const generateNodeCSS = (node, prefix = '') => {
+        const selector = `#${node.id}`;
+        html += `${selector} { position: absolute; left: ${node.x}px; top: ${node.y}px; width: ${node.width}px; height: ${node.height}px;`;
+        
+        // Add border to all nodes
+        html += ` border: 1px solid #ced4da;`;
+        
+        if (node.backgroundColor) {
+            html += ` background-color: ${node.backgroundColor};`;
+        }
+        
+        html += ' }\n';
+        
+        // Component-specific CSS
+        if (node.contentType) {
+            if (node.contentType === 'button') {
+                html += `${selector} { display: flex; align-items: center; justify-content: center; background-color: #3a86ff; color: white; border-radius: 4px; }\n`;
+            } else if (node.contentType === 'input') {
+                html += `${selector} { border: 2px solid #dee2e6; border-radius: 4px; padding: 8px; }\n`;
+            } else if (node.contentType === 'nav') {
+                html += `${selector} { background-color: #212529; color: white; display: flex; align-items: center; padding: 8px; border-bottom: 2px solid #495057; }\n`;
+            } else if (node.contentType === 'card') {
+                html += `${selector} { background-color: white; border: 1px solid #dee2e6; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 16px; }\n`;
+            } else if (node.contentType === 'text') {
+                html += `${selector} { padding: 8px; }\n`;
+            } else if (node.contentType === 'image') {
+                html += `${selector} { background-color: #e9ecef; display: flex; align-items: center; justify-content: center; }\n`;
+                html += `${selector}::after { content: 'Image'; color: #6c757d; }\n`;
+            }
+        }
+        
+        // Add border color that's slightly different for nested nodes to make hierarchy visible
+        if (node.parent && node.parent !== this.rootNode) {
+            html += `${selector}:hover { border-color: #6c757d; z-index: 1; }\n`;
+        }
+        
+        // Generate CSS for children
+        for (const child of node.children) {
+            generateNodeCSS(child, prefix + '  ');
+        }
+    };
+    
+    generateNodeCSS(this.rootNode);
+    
+    html += '    </style>\n</head>\n<body>\n    <div class="container">\n';
+    
+    // Generate HTML for each node
+    const generateNodeHTML = (node, indent = '        ') => {
+        html += `${indent}<div id="${node.id}"`;
+        
+        if (node.contentType) {
+            html += ` class="${node.contentType}"`;
+        }
+        
+        html += '>\n';
+        
+        // Add content
+        if (node.content && node.children.length === 0) {
+            html += `${indent}    ${node.content}\n`;
+        }
+        
+        // Generate HTML for children
+        for (const child of node.children) {
+            generateNodeHTML(child, indent + '    ');
+        }
+        
+        html += `${indent}</div>\n`;
+    };
+    
+    generateNodeHTML(this.rootNode);
+    
+    html += '    </div>\n</body>\n</html>';
+    
+    return html;
+}
+
+// Also update the generateReactCode method to add borders:
+
+generateReactCode() {
+    let code = "import React from 'react';\n\n";
+    code += "const GeneratedLayout = () => {\n";
+    code += "  return (\n";
+    code += "    <div className=\"container\" style={{ position: 'relative', width: '100%', height: '100vh' }}>\n";
+    
+    // Generate React components for each node
+    const generateNodeComponent = (node, indent = '      ') => {
+        let styles = {
+            position: 'absolute',
+            left: `${node.x}px`,
+            top: `${node.y}px`,
+            width: `${node.width}px`,
+            height: `${node.height}px`,
+            border: '1px solid #ced4da'  // Add border to all elements
+        };
+        
+        if (node.backgroundColor) {
+            styles.backgroundColor = node.backgroundColor;
+        }
+        
+        // Component-specific styles
+        if (node.contentType === 'button') {
+            styles = {
+                ...styles,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: '#3a86ff',
+                color: 'white',
+                borderRadius: '4px'
+            };
+        } else if (node.contentType === 'input') {
+            styles = {
+                ...styles,
+                border: '2px solid #dee2e6',
+                borderRadius: '4px',
+                padding: '8px'
+            };
+        } else if (node.contentType === 'nav') {
+            styles = {
+                ...styles,
+                backgroundColor: '#212529',
+                color: 'white',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '8px',
+                borderBottom: '2px solid #495057'
+            };
+        } else if (node.contentType === 'card') {
+            styles = {
+                ...styles,
+                backgroundColor: 'white',
+                border: '1px solid #dee2e6',
+                borderRadius: '4px',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                padding: '16px'
+            };
+        } else if (node.contentType === 'image') {
+            styles = {
+                ...styles,
+                backgroundColor: '#e9ecef',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+            };
+        }
+        
+        // Generate the style object string
+        const styleStr = Object.entries(styles)
+            .map(([key, value]) => `${key}: '${value}'`)
+            .join(', ');
+        
+        code += `${indent}<div style={{ ${styleStr} }}`;
+        
+        if (node.contentType) {
+            code += ` className="${node.contentType}"`;
+        }
+        
+        code += '>\n';
+        
+        // Add content
+        if (node.content && node.children.length === 0) {
+            code += `${indent}  ${node.content}\n`;
+        } else if (node.contentType === 'image') {
+            // Add placeholder text for image components
+            code += `${indent}  Image\n`;
+        }
+        
+        // Generate components for children
+        for (const child of node.children) {
+            generateNodeComponent(child, indent + '  ');
+        }
+        
+        code += `${indent}</div>\n`;
+    };
+    
+    generateNodeComponent(this.rootNode);
+    
+    code += "    </div>\n";
+    code += "  );\n";
+    code += "};\n\n";
+    code += "export default GeneratedLayout;";
+    
+    return code;
+}
 }
 
 // Initialize the layout generator when the DOM is loaded
